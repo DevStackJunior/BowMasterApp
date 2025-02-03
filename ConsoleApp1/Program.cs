@@ -4,9 +4,16 @@
     {
 
 
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Player playerOne = new Player(1);
+            Player playerTwo = new Player(2);
+
+            GameBoard boardOne = new GameBoard();
+
+            Console.ReadLine();
+
         }
     }
 }

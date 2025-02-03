@@ -15,12 +15,18 @@ namespace ConsoleApp1
     public class Pixel
     {
         private ConsoleColor? _PixelColor;
-        private string? _PixelASCII;
+        private char? _PixelASCII;
 
-        public ConsoleColor? PixelColor 
-        { 
-            get 
-            { 
+        // OBJECT LOGIC INTERPRETATION
+        // 2 different properties are assigned to the Pixel class
+        // PixelColor | PixelASCII 
+        // Each of both properties are taken only once not both at same time.
+        // First one is taken, secound isn't 
+        // Ensures it'll always be an object in one of 2 properties
+        public ConsoleColor? PixelColor
+        {
+            get
+            {
                 return _PixelColor;
             } 
             set
@@ -30,10 +36,7 @@ namespace ConsoleApp1
             }
         }
 
-        // A chaque attribution de valeur à l'une des 2 propriétés, on vide l'autre propriété par prudence. 
-        // S'assurer qu'il y aura toujours un objet dans une des 2 propriétés
-
-        public string? PixelASCII
+        public char? PixelASCII
         {
             get
             {

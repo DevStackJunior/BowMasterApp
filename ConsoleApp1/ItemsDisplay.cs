@@ -78,10 +78,10 @@ namespace ConsoleApp1
 
                 // Check for collision with obstacles (Towers + Adversary Player)
                 // Si collision entrante (atteinte) -> color white replaced by color black
-                if (Y = )
-                {
-                    
-                }
+                //if (Y = )
+                //{
+
+                //}
             }
 
 
