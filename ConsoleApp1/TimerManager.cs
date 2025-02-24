@@ -65,7 +65,7 @@ namespace ConsoleApp1
                             int yElapsed = 0;
 
 
-
+                            // A OPTIMISER EN EFFET DE BOUCLE
                             // Aussi longtemps que :
                             // Valeur actuelle est plus grande que valeur rendue par _elapsedMilliseconds
                             // Valeur actuelle est plus petite que valeur rendue par _elapsedMilliseconds + NextModulo
@@ -137,7 +137,7 @@ namespace ConsoleApp1
                             {
                                 xElapsed = 0;                                
                             }
-                            else break;                                                  
+                            break;                                                  
                                                         
                         }
 
