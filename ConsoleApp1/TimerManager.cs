@@ -10,7 +10,7 @@ namespace ConsoleApp1
     public class TimerManager
     {
         private readonly System.Timers.Timer _timer;
-        private int _elapsedMilliseconds;
+        private double _elapsedMilliseconds;
         private bool _isRunning;
         private GameBoard GBoard;
         private Player Player;
@@ -65,51 +65,80 @@ namespace ConsoleApp1
                             int yElapsed = 0;
 
 
-                            // Aussi longtemps que valeur actuelle est plus grande que 
-                            if(_elapsedMilliseconds > (_elapsedMilliseconds - 0.5) && _elapsedMilliseconds < (_elapsedMilliseconds + 0.5))
+
+                            // Aussi longtemps que :
+                            // Valeur actuelle est plus grande que valeur rendue par _elapsedMilliseconds
+                            // Valeur actuelle est plus petite que valeur rendue par _elapsedMilliseconds + NextModulo
+                            if(_elapsedMilliseconds > 0.5 && _elapsedMilliseconds < 1.5)
                             {
-                                // updating the triggering process in milliseconds power bar
-                                double elapsedEvolved = _elapsedMilliseconds++;
-                                // EPosition | xElapsedPosition 
-                                double ePosition = xElapsedPosition + elapsedEvolved;
+                                xElapsed++;
                                 //Displays the power bar in yellow above player 1
                                 GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
-
-
                             }
 
-                            // "display.GetLength(0)" catches the total height (lines accumulation) of the window console as reference point
-                            // Est ce qu'elle passe bien 12x dans le player ? A VERIFIER
-                            for (int y = GBoard.ScreenHeight - 1 - elapsedHeightDisplay; y < GBoard.ScreenHeight - 1; y++)
+                            else if(_elapsedMilliseconds > 1.5 && _elapsedMilliseconds < 2.5)
                             {
-                                //"player.GetLength(1)" catches the total width (columns accumulation) of the window console as reference point
-                                for (int x = xElapsedPosition; x < elapsedWidthDisplay + xElapsedPosition; x++)
-                                {
-                                    // Append text to an existing file named "WriteLines.txt"
-                                    /* using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "log.txt"), true))
-                                    {
-                                        outputFile.WriteLine($"yPlayer vaut :{yElapsed}");
-                                        outputFile.WriteLine($"xElapsed vaut :{xElapsed}");
-                                        outputFile.WriteLine($"Caractère dessiné :'{playerMembers[yElapsed, xElapsed]}'");
-                                    }*/
-
-                                    //Displays the power bar in yellow above player 1
-                                    GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
-                                    
-                                    //Check the last value on the 2 dimensional array (position 2) | if current loop is on position 2 adapts the x elapsed
-                                    if (xElapsed == 2)
-                                    {
-                                        xElapsed= 0;
-
-                                        yElapsed++;
-                                    }
-                                    else xElapsed++;
-
-                                    // TODO Ici on créé un nouveau Pixel, on alimente sa propriété ascii avec le bon caractère, et on ajoute le pixel dans le display de CurrentGame.GameBoard
-                                }
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
                             }
 
-                            break;
+                            else if(_elapsedMilliseconds > 2.5 && _elapsedMilliseconds < 3.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 3.5 && _elapsedMilliseconds < 4.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 4.5 && _elapsedMilliseconds < 5.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 6.5 && _elapsedMilliseconds < 7.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 7.5 && _elapsedMilliseconds < 8.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 8.5 && _elapsedMilliseconds < 9.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            else if (_elapsedMilliseconds > 9.5 && _elapsedMilliseconds < 10.5)
+                            {
+                                xElapsed++;
+                                //Displays the power bar in yellow above player 1
+                                GBoard.Display[yElapsed, xElapsed].PixelColor = ConsoleColor.Yellow;
+                            }
+
+                            //Check the last value on the 2 dimensional array (position 2) | if current loop is on position 2 adapts the x elapsed
+                            if (xElapsed == 10)
+                            {
+                                xElapsed = 0;                                
+                            }
+                            else break;                                                  
+                                                        
                         }
 
 
