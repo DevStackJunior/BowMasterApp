@@ -12,10 +12,12 @@ namespace ConsoleApp1
         public class Tower
         {
 
+
         }
 
         public class Player
         {
+
 
         }
 
