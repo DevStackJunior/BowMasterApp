@@ -123,50 +123,92 @@ namespace ConsoleApp1
         /// <summary>
         /// Updates the ball position and velocity.
         /// </summary>
-        /// <param name="gBoard">The Gameboard where the ball is</param>
+        /// <param name="player">Current player launching ball</param>
         /// <param name="previousPosition">The previous X Y position of the ball</param>
         public bool Update(Vector2 previousPosition, Player player)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.SetCursorPosition((int)previousPosition.X, (int)previousPosition.Y);
             Console.Write(" ");
-
-            // Applique la gravité progressivement
-            Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity);
+            Vector2 newPosition = new Vector2(0,0);
+            Vector2 direction = new Vector2(0,0);
 
             // Déplacement fractionné (plusieurs petites étapes au lieu d'un grand bond)
-            float step = 0.8f;  // Ajuste cette valeur pour affiner la précision du mouvement
-            Vector2 newPosition = Center + Velocity;
-            Vector2 direction = Vector2.Normalize(Velocity); // Direction normalisée
+            float step = 0.8f;  // Ajuste cette valeur pour affiner la précision du mouvement            
 
-            float distance = Vector2.Distance(Center, newPosition);
-            int numSteps = (int)(distance / step);  // Nombre de sous-étapes
+            float distance = 0;
+            int numSteps = 0;  // Nombre de sous-étapes
 
-            for (int i = 0; i < numSteps; i++)
+            if (player.PlayerNumber == 1)
             {
-                Vector2 intermediatePosition = Center + direction * step;
+                // Applique la gravité progressivement
+                Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity);
+                newPosition = Center + Velocity;
+                direction = Vector2.Normalize(Velocity); // Direction normalisée
 
-                if (GameBoard.CheckCollision(intermediatePosition, player))
+                distance = Vector2.Distance(Center, newPosition);
+                numSteps = (int)(distance / step);  // Nombre de sous-étapes
+
+                for (int i = 0; i < numSteps; i++)
                 {
-                    //lost value of latest position after break 
+                    Vector2 intermediatePosition = Center + direction * step;
+
+                    if (GameBoard.CheckCollision(intermediatePosition, player))
+                    {
+                        //lost value of latest position after break 
+                        Center = intermediatePosition;
+                        return false;
+                    }
+
                     Center = intermediatePosition;
-                    return false;
                 }
 
-                Center = intermediatePosition;                
-            }
+                Console.SetCursorPosition((int)Center.X, (int)Center.Y);
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("O");
+                Console.ResetColor();
+                return true;
 
+            }
+            else if (player.PlayerNumber == 2)
+            {
+
+                // Applique la gravité progressivement dans le sens inverse
+                Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity);
+                newPosition = Center + Velocity;
+                direction = Vector2.Normalize(Velocity); // Direction normalisée
+                direction = new Vector2(-direction.X, direction.Y);
+                distance = Vector2.Distance(Center, newPosition);
+                numSteps = (int)(distance / step);  // Nombre de sous-étapes
+
+                for (int i = 0; i < numSteps; i++)
+                {
+                    Vector2 intermediatePosition = Center + direction * step; //- inverse radius angle de lancé
+
+                    if (GameBoard.CheckCollision(intermediatePosition, player))
+                    {
+                        //lost value of latest position after break 
+                        Center = intermediatePosition;
+                        return false;
+                    }
+
+                    Center = intermediatePosition;
+                }
+                Console.SetCursorPosition((int)Center.X, (int)Center.Y);
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("O");
+                Console.ResetColor();
+                return true;
+            }
+            
             // Checks if the ball is within the limitations of the gameconsole array 
             if (Center.Y >= GameBoard.ScreenHeight - 1 || Center.Y < 0 || Center.X < 0 || Center.X >= GameBoard.ScreenWidth)
             {
-                Center = previousPosition;                
+                Center = previousPosition;
             }
 
-            Console.SetCursorPosition((int)Center.X, (int)Center.Y);
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("O");
-            Console.ResetColor();
             return true;
         }            
 

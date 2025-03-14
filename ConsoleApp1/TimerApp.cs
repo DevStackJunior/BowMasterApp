@@ -36,7 +36,7 @@ namespace ConsoleApp1
         public async Task<double> Run(string timerType)
         {
             // Start the timer to begin updating the power bar
-            _timerManager.Start();            
+            _timerManager.Start();
             // Variable to store the result based on the time when the spacebar is pressed
             double result = 0;
             // Start an asynchronous task to listen for key presses
