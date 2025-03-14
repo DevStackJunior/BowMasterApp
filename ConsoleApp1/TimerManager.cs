@@ -53,7 +53,7 @@ namespace ConsoleApp1
         /// ensuring sufficient precision for updating the power bar. The elapsed event of the 
         /// timer is subscribed to handle the time-based updates for the power bar display.
         /// </summary>
-        /// <param name="gBoard">The game board object, providing access to the game's visual layout.</param>
+        /// <param name="timerType">Reusing class identifying input detection & timing</param>
         /// <param name="player">The player object, representing the current player in the game.</param>
         public TimerManager(Player player, string timerType)
         {
@@ -99,7 +99,7 @@ namespace ConsoleApp1
             {
                 _elapsedMilliseconds += 30;
 
-                // Attendre un petit délai pour stabiliser l'affichage et éviter le flickering
+                // Wait a small delay to stabilize the overview on screen to avoid "flickering"
                 await Task.Delay(30);
 
                 int heightGapDisplay = Player.PlayerMembers.GetLength(0) + Player.HeartGap + BarGap;
@@ -113,33 +113,69 @@ namespace ConsoleApp1
                 int leftGap = 2;
                 int powerBarXPosition = (Player.PlayerNumber == 1) ? leftGap : GameBoard.ScreenWidth - 1 - leftGap;
 
+                // Lock gameplay overview to avoid flickering
                 lock (Console.Out)
                 {
-                    Console.SetCursorPosition(powerBarXPosition, _powerBarYPosition);
-                    Console.ResetColor();
-
-                    for (int i = 0; i < powerBarMaxSize.Length; i++)
+                    if (Player.PlayerNumber == 1)
                     {
-                        if (i > powerSize)
-                        {
-                            Console.BackgroundColor = ConsoleColor.Red;
-                        }
-                        else if (powerSize <= 3)
-                        {
-                            Console.BackgroundColor = ConsoleColor.Yellow;
-                        }
-                        else if (powerSize <= 6)
-                        {
-                            Console.BackgroundColor = ConsoleColor.Green;
-                        }
-                        else
-                        {
-                            Console.BackgroundColor = ConsoleColor.Blue;
-                        }
+                        Console.SetCursorPosition(powerBarXPosition, _powerBarYPosition);
 
-                        Console.Write(' ');
+                        Console.ResetColor();
+
+                        for (int i = 0; i < powerBarMaxSize.Length; i++)
+                        {
+                            if (i > powerSize)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Red;
+                            }
+                            else if (powerSize <= 3)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                            }
+                            else if (powerSize <= 6)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Green;
+                            }
+                            else
+                            {
+                                Console.BackgroundColor = ConsoleColor.Blue;
+                            }
+
+                            Console.Write(' ');
+                        }
+                        Console.ResetColor();
                     }
-                    Console.ResetColor();                    
+                    else if (Player.PlayerNumber == 2) {
+                        Console.SetCursorPosition(powerBarXPosition, _powerBarYPosition);
+
+                        Console.ResetColor();
+
+                        for (int i = 0; i <= powerBarMaxSize.Length; i++)
+                        {
+                            if (i > powerSize)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Red; 
+                            }
+                            else if (powerSize <= 3)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                            }
+                            else if (powerSize <= 6)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Green;
+                            }
+                            else
+                            {
+                                Console.BackgroundColor = ConsoleColor.Blue;
+                            }
+
+                            Console.Write(' ');
+                            Console.SetCursorPosition(powerBarXPosition - i, _powerBarYPosition);
+                        }
+                        Console.ResetColor();
+                    }
+
+                                   
                 }
 
                 if (_elapsedMilliseconds >= PowerBarMaxTime)
@@ -164,9 +200,9 @@ namespace ConsoleApp1
             {
                 _elapsedMilliseconds += 30;
 
-                // Attendre un petit délai pour stabiliser l'affichage et éviter le flickering
+                // Wait a small delay to stabilize the overview on screen to avoid "flickering"
                 await Task.Delay(30);
-
+                
                 lock (Console.Out)
                 {
                     // TODO Faire la circulation de l'angle
@@ -207,6 +243,7 @@ namespace ConsoleApp1
         /// based on the elapsed time and a maximum time constant.
         /// </summary>
         /// <param name="key">keyboard information retrieved from being pressed by user</param>
+        /// <param name="timerType">Reusing class identifying input detection & timing</param>
         /// <returns>
         /// Returns a calculated result as a double based on the elapsed time, or 0 if the spacebar 
         /// is not pressed or the process is not running.
@@ -226,6 +263,7 @@ namespace ConsoleApp1
                 }
                 else if (!string.IsNullOrEmpty(timerType) && timerType == "angle")
                 {
+                    //adapts calculation process to 45f degree angle with '90'
                     result = _elapsedMilliseconds / (double)PowerBarMaxTime * 90;
                 }
                 
