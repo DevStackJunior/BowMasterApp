@@ -202,7 +202,7 @@ namespace ConsoleApp1
             int startPositionX = 0;
             int startPositionY = GameBoard.ScreenHeight - AngleHeight;
             //int startPositionX = 6; Player 1 starts            
-
+            
             if (PlayerNumber == 1)
             {
                 startPositionX = 6;
@@ -210,7 +210,7 @@ namespace ConsoleApp1
                 for (int x = 0; x < 5; x++)
                 {
                     //Object creation of a pixel property of type pixelASCII to display heart item                    
-                    Console.SetCursorPosition(startPositionY, startPositionX);
+                    Console.SetCursorPosition(startPositionX, startPositionY);
                     Console.Write(AngleSymbol);
                     startPositionY++;
                     startPositionX++;
@@ -223,24 +223,24 @@ namespace ConsoleApp1
                     startPositionY = GameBoard.ScreenHeight - AngleHeight;
 
                     //redefines the starting position to change its color
-                    Console.SetCursorPosition(startPositionY + starToColor, startPositionX + starToColor);
+                    Console.SetCursorPosition(startPositionX + starToColor, startPositionY + starToColor);
                     Console.Write(AngleS);
                 }
                 Console.ResetColor();
             }
             else
             {
-                startPositionX = 7;
+                startPositionX = GameBoard.ScreenWidth - 7;
 
                 for (int x = 0; x < 5; x++)
                 {
                     //Object creation of a pixel property of type pixelASCII to display heart item                    
-                    Console.SetCursorPosition(startPositionY, startPositionX);
+                    Console.SetCursorPosition(startPositionX, startPositionY);
                     Console.Write(AngleSymbol);
                     startPositionY++;
                     startPositionX--;
                 }
-                               
+                
                 if (isColorStarOFF)
                 {
                     //startPositionX && startPositionY | redefines the starting position due to evolution increments engaged on previous for loop
@@ -250,7 +250,7 @@ namespace ConsoleApp1
                     //redefines the starting position to change its color
                     //X minus startToColor to reposition '@' in the reversed diagonal                    
                     //redefines the starting position to change its color
-                    Console.SetCursorPosition(startPositionY + starToColor, startPositionX - starToColor);
+                    Console.SetCursorPosition(startPositionX + starToColor, startPositionY - starToColor);
                     Console.Write(AngleS);
                 }
                 Console.ResetColor();
@@ -262,19 +262,17 @@ namespace ConsoleApp1
         /// First function by default triggered in the game console when game starts
         /// </summary>
         /// <returns>returns a task of type float</returns>
-        public async Task<float> AnimatedBowPlayer1()
+        public async Task<float> AnimatedBowPlayer()
         {            
             var timerApp = new TimerApp(this, "angle");
 
             double angle = await timerApp.Run("angle");
-
-            // TODO changer la conversion pour un angle cohérent
-            float convertedScore = (float)angle * 9 / 10;
+                        
+            float convertedScore = (float)angle;
 
             return convertedScore;
-
-        }       
-                
+        }
+        
         /// <summary>
         /// Constructor of Player Class
         /// Defines lives number per player
